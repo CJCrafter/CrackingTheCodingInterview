@@ -1,30 +1,39 @@
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Implement an algorithm to determine if a string has all unique
  * characters. What if you cannot use additional data structures?
- *
- * For simplicity, all methods in this class should take
- * a string parameter and return a boolean
  */
 public class IsUnique {
 
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
-        Method[] methods = IsUnique.class.getDeclaredMethods();
+
+        // Gets all methods in this class that are to be tested.
+        // Using the annotation fixes the issue of compiler-added
+        // (Which are still present in Class#getDeclaredMethods) and
+        // avoids testing methods in the super class
+        Set<Method> methods = Arrays.stream(IsUnique.class.getMethods())
+                .filter(method -> method.isAnnotationPresent(Testable.class))
+                .collect(Collectors.toSet());
 
         for (Method method : methods) {
-            if (method.getName().equals("main")) continue;
 
-            System.out.println("Testing method " + method.getName());
+            System.out.println("Testing method " + method.toGenericString());
+
             System.out.println("\t\"test\": " + method.invoke(null, "test")); // false
             System.out.println("\t\"hello\": " + method.invoke(null, "hello")); // false
             System.out.println("\t\"hey\": " + method.invoke(null, "hey")); // true
             System.out.println("\t\"Test with three\": " + method.invoke(null, "Test with three")); // false
-
         }
     }
 
@@ -37,6 +46,7 @@ public class IsUnique {
      * @param str The string to test against
      * @return true if all the characters are unique
      */
+    @Testable
     public static boolean isUniqueSet(String str) {
         Set<Character> characters = new HashSet<>();
 
@@ -60,6 +70,7 @@ public class IsUnique {
      * @param str The string to test against
      * @return true if all the characters are unique
      */
+    @Testable
     public static boolean isUniqueChallenge(String str) {
 
         // Iterate through every character
@@ -84,5 +95,32 @@ public class IsUnique {
         return true;
     }
 
+    /**
+     * Implementation of the defined algorithm utilizing
+     * java 8's streams and lambda expressions
+     *
+     * @param str The string to test against
+     * @return true if all the characters are unique
+     */
+    @Testable
+    public static boolean isUniqueStream(String str) {
 
+        for (char c : str.toCharArray()) {
+
+            // Count the number of characters found
+            long count = str.chars().filter(character -> character == c).count();
+            if (count != 1L) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Methods annotated by <code>Testable</code> are tested.
+     */
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(ElementType.METHOD)
+    private @interface Testable {
+    }
 }
