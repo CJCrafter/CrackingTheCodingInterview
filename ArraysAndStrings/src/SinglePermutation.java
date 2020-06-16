@@ -16,7 +16,8 @@ public class SinglePermutation {
     }
 
     private static void test(String str1, String str2) {
-        System.out.println("Is \"" + str1 + "\" a permutation of \"" + str2 + "\": " + isPermutation(str1, str2));
+        boolean isPermutation = isPermutation(str1, str2);
+        System.out.println("\"" + str1 + "\" is" + (isPermutation ? "" : " not") + " a permutation of \"" + str2 + "\"");
     }
 
     /**
