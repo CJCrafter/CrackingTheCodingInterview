@@ -1,5 +1,5 @@
 /**
- * Write a method to rpelace all SPACEs in a string with '%20'. You
+ * Write a method to replace all spaces in a string with '%20'. You
  * may assume that the string has sufficient SPACE at the end to hold
  * the actual characters, and that you are given the "true" length of
  * the string. (Note: If implementing in java, please use a character
@@ -36,7 +36,7 @@ public class URLify {
         // Adapts the string into a character array with extra space
         int count = (int) str.chars().filter(c -> c == ' ').count();
         int logicalSize = str.length();
-        char[] characters = new char[logicalSize + count * SPACE];
+        char[] characters = new char[logicalSize + count * (SPACE - 1)];
 
         // Copy the characters from the string over to the character array
         for (int i = 0; i < logicalSize; i++) {
@@ -62,8 +62,7 @@ public class URLify {
 
             if (c == ' ') {
 
-                remove(str, i + 1);
-                shift(str, i, length + counter * SPACE, SPACE);
+                shift(str, i, length + counter * (SPACE - 1), SPACE - 1);
                 for (int j = i; j < i + SPACE; j++) {
                     str[j] = "%20".charAt(j - i);
                 }
@@ -71,19 +70,6 @@ public class URLify {
                 counter++;
             }
         }
-    }
-
-    /**
-     * Removes the character at the given index and shifts
-     * all elements up the array 1 to fill in the gap
-     *
-     * Note: The length of the array does not change
-     *
-     * @param arr Array to modify
-     * @param index Index to remove
-     */
-    public static void remove(char[] arr, int index) {
-        shift(arr, index, arr.length, -1);
     }
 
     /**
