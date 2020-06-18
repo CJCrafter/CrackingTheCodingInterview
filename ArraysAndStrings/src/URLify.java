@@ -6,7 +6,7 @@
  * array so that you can perform this operation in place.)
  *
  * Example:
- *   Input:     "Mr John Smith      ", 13
+ *   Input:     "Mr John Smith    ", 13
  *   Output:    "Mr%20John%20Smith"
  */
 public class URLify {
