@@ -13,9 +13,9 @@ public class RotateMatrix {
     public static void main(String[] args) {
         int[][] arr = new int[][] {
                 new int[] {
-                        byteColor(255, 255, 255, 255),
-                        byteColor(255, 0, 255, 0),
-                        byteColor(255, 10, 10, 10)
+                        byteColor(255, 255, 255),
+                        byteColor(0, 255, 0),
+                        byteColor(10, 10, 10)
                 }
         };
 
@@ -23,11 +23,17 @@ public class RotateMatrix {
         System.out.println(Arrays.deepToString(rotate(arr)));
     }
 
+    /**
+     * Rotates the given array by 90
+     *
+     * @param arr The array to rotate
+     * @return The rotated array
+     */
     public static int[][] rotate(int[][] arr) {
 
         // If the array has no contents, no rotation can be applied
         if (arr.length == 0) {
-            return arr;
+            return arr.clone();
         }
 
         // Create an array to store the rotated image
@@ -45,7 +51,15 @@ public class RotateMatrix {
         return temp;
     }
 
-    private static int byteColor(int a, int r, int g, int b) {
-        return a << 24 | r << 16 | g << 8 | b;
+    /**
+     * Formats an RGB color into an integer
+     *
+     * @param r Red component
+     * @param g Green component
+     * @param b Blue component
+     * @return The RGB int color
+     */
+    private static int byteColor(int r, int g, int b) {
+        return ((0xFF) << 24)| ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | ((b & 0xFF));
     }
 }
