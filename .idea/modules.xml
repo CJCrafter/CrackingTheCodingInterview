@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ArraysAndStrings/ArraysAndStrings.iml" filepath="$PROJECT_DIR$/ArraysAndStrings/ArraysAndStrings.iml" />
       <module fileurl="file://$PROJECT_DIR$/CrackingTheCodingInterview.iml" filepath="$PROJECT_DIR$/CrackingTheCodingInterview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LinkedList/LinkedList.iml" filepath="$PROJECT_DIR$/LinkedList/LinkedList.iml" />
     </modules>
   </component>
 </project>
